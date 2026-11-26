@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Chess Clock</title>
+  <meta name="description" content="A two-sided chess clock for your phone.">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Chess Clock">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <main id="clock" class="clock">
+    <button type="button" class="half top" data-side="top">
+      <span class="half-inner">
+        <span class="info"><span class="color-name"></span><span class="moves"></span></span>
+        <span class="time">5:00</span>
+        <span class="status"></span>
+      </span>
+    </button>
+
+    <nav class="strip" aria-label="Clock controls">
+      <button type="button" class="icon-btn" id="btn-settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="btn-undo" aria-label="Undo last tap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>
+      </button>
+      <button type="button" class="icon-btn primary" id="btn-pause" aria-label="Pause">
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5-12-7.5Z"/></svg>
+      </button>
+      <button type="button" class="icon-btn" id="btn-reset" aria-label="Reset clock">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+      </button>
+    </nav>
+
+    <button type="button" class="half bottom" data-side="bottom">
+      <span class="half-inner">
+        <span class="info"><span class="color-name"></span><span class="moves"></span></span>
+        <span class="time">5:00</span>
+        <span class="status"></span>
+      </span>
+    </button>
+  </main>
+
+  <div id="settings" class="panel" role="dialog" aria-modal="true" aria-labelledby="settings-title" hidden>
+    <div class="panel-inner">
+      <header class="panel-head">
+        <h1 id="settings-title">Settings</h1>
+        <button type="button" class="btn primary" id="btn-done">Done</button>
+      </header>
+
+      <section>
+        <h2>Time control</h2>
+        <div class="chips" id="presets" role="radiogroup" aria-label="Time control"></div>
+        <div id="custom-editor" hidden>
+          <label class="check"><input type="checkbox" id="same-for-both" checked> Same time for both players</label>
+          <div id="player-editors"></div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Sides</h2>
+        <div class="row">
+          <span id="sides-text">White at the bottom</span>
+          <button type="button" class="btn" id="btn-swap">Swap sides</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Theme</h2>
+        <div class="themes" id="themes" role="radiogroup" aria-label="Theme"></div>
+        <div id="custom-colors" class="colors" hidden>
+          <label>White half <input type="color" data-path="white.bg"></label>
+          <label>White digits <input type="color" data-path="white.fg"></label>
+          <label>Black half <input type="color" data-path="black.bg"></label>
+          <label>Black digits <input type="color" data-path="black.fg"></label>
+          <label>Active marker <input type="color" data-path="accent"></label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Sound &amp; feedback</h2>
+        <label class="check"><input type="checkbox" id="opt-sound"> Click sound</label>
+        <label class="check"><input type="checkbox" id="opt-vibration"> Vibration (where supported)</label>
+        <label class="check"><input type="checkbox" id="opt-voice"> Spoken warnings at 1 min, 30 s and 10 s</label>
+      </section>
+
+      <section>
+        <h2>History</h2>
+        <ol class="history" id="history"></ol>
+        <button type="button" class="btn" id="btn-clear-history">Clear history</button>
+      </section>
+
+      <p class="note">Settings, the current game and the history are saved on this device only.</p>
+    </div>
+  </div>
+
+  <template id="player-editor">
+    <fieldset class="player">
+      <legend></legend>
+      <div class="grid">
+        <label>Minutes <input type="number" inputmode="numeric" min="0" max="600" data-field="min"></label>
+        <label>Seconds <input type="number" inputmode="numeric" min="0" max="59" data-field="sec"></label>
+        <label>Increment (s) <input type="number" inputmode="numeric" min="0" max="600" data-field="inc"></label>
+        <label>Delay (s) <input type="number" inputmode="numeric" min="0" max="600" data-field="delay"></label>
+      </div>
+      <p class="hint">Extra time after a number of moves (optional)</p>
+      <div class="grid stages">
+        <label>After move <input type="number" inputmode="numeric" min="0" max="500" data-field="s1moves"></label>
+        <label>Add minutes <input type="number" inputmode="numeric" min="0" max="600" data-field="s1min"></label>
+        <label>After move <input type="number" inputmode="numeric" min="0" max="500" data-field="s2moves"></label>
+        <label>Add minutes <input type="number" inputmode="numeric" min="0" max="600" data-field="s2min"></label>
+      </div>
+    </fieldset>
+  </template>
+</body>
+</html>
