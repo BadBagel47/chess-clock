@@ -3,13 +3,14 @@
 Rules version: v1.14
 Inventory: 2026-11-26 (repo was empty: no branches, commits, pull requests or issues)
 Project language: English (product text and README)
-Publishing method: GitHub Pages, deployed from branch `main`, folder `/` (root) – https://badbagel47.github.io/chess-clock/ (needs to be enabled once, see One-time actions)
+Publishing method: GitHub Pages, deployed from branch `main`, folder `/` (root) – https://badbagel47.github.io/chess-clock/ (Pages' own build runs on every push to `main`)
 
 ## Current state
+- 2026-11-27: Published on GitHub Pages; same browser checks passed on the live site. Not yet tried on a real phone.
 - 2026-11-26: First full version built: D-001, F-001–F-019 (see BACKLOG.md). Unit tests pass; checked in headless Chromium at phone size (taps, pause, reload, settings, themes, flag, history, keyboard, offline). Not yet tried on a real phone.
 
 ## Next steps
-- User: enable GitHub Pages and set `main` as default branch (One-time actions), then try the clock on a phone.
+- User: try the clock on a phone.
 - Collect feedback as new backlog items.
 
 ## Goal
@@ -33,8 +34,8 @@ A mobile chess clock as a web app: the screen is split in two halves, the top ha
 
 ## One-time actions
 - Done 2026-11-26: permission for agents to push to `main` (granted by the user in chat).
-- Pending: enable GitHub Pages (Settings → Pages → Deploy from a branch → `main`, `/ (root)`).
-- Pending: set `main` as the default branch (the first push happened to be a `claude/` branch, which GitHub made the default).
+- Done 2026-11-27: GitHub Pages enabled (Deploy from a branch → `main`, `/ (root)`).
+- Done 2026-11-27: `main` set as the default branch.
 
 ## Environment notes (2026-11-26)
 - Claude Code cloud session: git push works to `main` and the session's `claude/` branch; GitHub MCP tools available; no `gh` CLI except code search; repo settings (Pages, default branch) cannot be changed by the agent.
